@@ -8,25 +8,25 @@ namespace XmlRpc.Types
     /// <summary>
     /// Represents an XmlRpcType containing a string.
     /// </summary>
-    public class XmlRpcString : XmlRpcType<string>
+    public sealed class XmlRpcString : XmlRpcType<string>
     {
         /// <summary>
-        /// The name of Elements of this type.
+        /// The name of value content elements for this XmlRpc type.
         /// </summary>
-        public override string ElementName
+        public override string ContentElementName
         {
-            get { return "string"; }
+            get { return XmlRpcElements.StringElement; }
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcString"/> class with Value set to an empty string.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcString"/> class with Value set to an empty string.
         /// </summary>
         public XmlRpcString()
             : base(string.Empty)
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcString"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcString"/> class with the given value.
         /// </summary>
         /// <param name="value">The string encapsulated by this.</param>
         public XmlRpcString(string value)
@@ -34,26 +34,29 @@ namespace XmlRpc.Types
         { }
 
         /// <summary>
-        /// Generates an XElement from the Value. Default implementation creates an XElement with the ElementName and the content from Value.
+        /// Checks whether the value-XElement has content fitting with this XmlRpc type.
         /// </summary>
-        /// <returns>The generated Xml.</returns>
-        public override XElement GenerateXml()
+        /// <param name="xElement">The element to check.</param>
+        /// <returns>Whether it has fitting content or not.</returns>
+        protected override bool hasValueCorrectContent(XElement xElement)
         {
-            return new XElement(XName.Get(ElementName), Value);
+            return (!xElement.HasElements && !xElement.IsEmpty) || base.hasValueCorrectContent(xElement);
         }
 
         /// <summary>
-        /// Sets the Value property with the information contained in the XElement. It must have a name fitting with the ElementName property.
+        /// Sets the Value property with the information contained in the value-XElement.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override XmlRpcType<string> ParseXml(XElement xElement)
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement xElement)
         {
-            checkName(xElement);
+            if (xElement.HasElements)
+                Value = xElement.Elements().First().Value;
+            else if (!xElement.IsEmpty)
+                Value = xElement.Value;
+            else return false;
 
-            Value = xElement.Value;
-
-            return this;
+            return true;
         }
     }
 }

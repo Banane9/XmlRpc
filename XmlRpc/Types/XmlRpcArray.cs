@@ -12,31 +12,27 @@ namespace XmlRpc.Types
     /// TBase enforces TArray. TArray has to be XmlRpcString because it derives from XmlRpcType&lt;string&gt;
     /// </summary>
     /// <typeparam name="TArray">TArray[] is the Type of the Value property.</typeparam>
-    /// <typeparam name="TBase">TBase is the base type that TArray has to derive from.</typeparam>
-    public class XmlRpcArray<TArray, TBase> : XmlRpcType<TArray[]>, IEnumerable<TBase> where TArray : XmlRpcType<TBase>, new()
+    /// <typeparam name="TArrayBase">TBase is the base type that TArray has to derive from.</typeparam>
+    public class XmlRpcArray<TArray, TArrayBase> : XmlRpcType<TArray[]>, IEnumerable<TArrayBase> where TArray : XmlRpcType<TArrayBase>, new()
     {
-        public const string DataElement = "data";
-
-        public const string ValueElement = "value";
-
         /// <summary>
         /// The name of Elements of this type.
         /// </summary>
-        public override string ElementName
+        public override string ContentElementName
         {
             get { return "array"; }
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcArray"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcArray"/> class with the given value.
         /// </summary>
         /// <param name="value">The array encapsulated by this.</param>
-        public XmlRpcArray(TArray[] value)
+        public XmlRpcArray(params TArray[] value)
             : base(value)
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcArray"/> class with a zero-length TArray array for the Value property.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcArray"/> class with a zero-length TArray array for the Value property.
         /// </summary>
         public XmlRpcArray()
             : base(new TArray[0])
@@ -48,21 +44,12 @@ namespace XmlRpc.Types
         /// <returns>The generated Xml.</returns>
         public override XElement GenerateXml()
         {
-            XElement array = new XElement(XName.Get(this.ElementName));
-
-            XElement data = new XElement(XName.Get("data"));
-            foreach (TArray value in Value)
-            {
-                XElement valueElement = new XElement(XName.Get("value"));
-                valueElement.Add(value.GenerateXml());
-                data.Add(valueElement);
-            }
-
-            array.Add(data);
-            return array;
+            return new XElement(XName.Get(ContentElementName),
+                new XElement(XName.Get("data"),
+                    Value.Select(value => value.GenerateXml()).ToArray()));
         }
 
-        public IEnumerator<TBase> GetEnumerator()
+        public IEnumerator<TArrayBase> GetEnumerator()
         {
             return Value.Select(value => value.Value).GetEnumerator();
         }
@@ -73,42 +60,30 @@ namespace XmlRpc.Types
         }
 
         /// <summary>
-        /// Sets the Value property with the information contained in the XElement. It must have a name fitting with the ElementName property.
+        /// Sets the Value property with the information contained in the value-XElement.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override XmlRpcType<TArray[]> ParseXml(XElement xElement)
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement xElement)
         {
-            checkName(xElement);
             List<TArray> content = new List<TArray>();
 
-            foreach (XElement valueElement in xElement.Element(XName.Get(DataElement)).Elements(XName.Get(ValueElement)))
+            if (!xElement.Elements().First().Elements().First().Name.LocalName.Equals(XmlRpcElements.ArrayDataElement))
+                return false;
+
+            foreach (XElement valueElement in xElement.Elements().First().Elements().First().Elements())
             {
                 TArray value = new TArray();
 
-                if (valueElement.HasElements)
-                {
-                    XElement valueContentElement = valueElement.Element(XName.Get(value.ElementName));
-
-                    if (valueContentElement == null)
-                        throw new FormatException("Value Content isn't of the expected type. Expected: " + value.ElementName);
-
-                    value.ParseXml(valueElement.Elements().First());
-                }
-                else if (value.ElementName == "string") //default type for value is string
-                {
-                    value.ParseXml(new XElement(XName.Get("string"), valueElement.Value));
-                }
-                else
-                {
-                    throw new FormatException("Content of value tag is not a tag, and type of the array isn't String");
-                }
+                if (!value.ParseXml(valueElement))
+                    return false;
 
                 content.Add(value);
             }
 
             Value = content.ToArray();
-            return this;
+
+            return true;
         }
     }
 }

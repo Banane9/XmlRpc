@@ -11,22 +11,22 @@ namespace XmlRpc.Types
     public class XmlRpcInt : XmlRpcType<int>
     {
         /// <summary>
-        /// The name of Elements of this type.
+        /// The name of value content elements for this XmlRpc type.
         /// </summary>
-        public override string ElementName
+        public override string ContentElementName
         {
-            get { return "int"; }
+            get { return XmlRpcElements.IntElement; }
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcInt"/> class with Value set to the default value for int.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcInt"/> class with Value set to the default value for int.
         /// </summary>
         public XmlRpcInt()
             : base()
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcInt"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcInt"/> class with the given value.
         /// </summary>
         /// <param name="value">The int encapsulated by this.</param>
         public XmlRpcInt(int value)
@@ -34,17 +34,21 @@ namespace XmlRpc.Types
         { }
 
         /// <summary>
-        /// Sets the Value property with the information contained in the XElement. It must have a name fitting with the ElementName property.
+        /// Sets the Value property with the information contained in the value-XElement.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override XmlRpcType<int> ParseXml(XElement xElement)
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement xElement)
         {
-            checkName(xElement);
+            int value;
 
-            Value = int.Parse(xElement.Value);
+            if (int.TryParse(xElement.Elements().First().Value, out value))
+            {
+                Value = value;
+                return true;
+            }
 
-            return this;
+            return false;
         }
     }
 }

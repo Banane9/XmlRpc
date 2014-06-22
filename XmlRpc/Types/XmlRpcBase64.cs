@@ -8,25 +8,25 @@ namespace XmlRpc.Types
     /// <summary>
     /// Represents an XmlRpcType containing a byte array that is formatted as base64 string.
     /// </summary>
-    public class XmlRpcBase64 : XmlRpcType<byte[]>
+    public sealed class XmlRpcBase64 : XmlRpcType<byte[]>
     {
         /// <summary>
-        /// The name of Elements of this type.
+        /// The name of value content elements for this XmlRpc type.
         /// </summary>
-        public override string ElementName
+        public override string ContentElementName
         {
-            get { return "base64"; }
+            get { return XmlRpcElements.Base64Element; }
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcBase64"/> class with a zero-length byte array for the Value property.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcBase64"/> class with a zero-length byte array for the Value property.
         /// </summary>
         public XmlRpcBase64()
             : base(new byte[0])
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcBase64"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcBase64"/> class with the given value.
         /// </summary>
         /// <param name="value">The data encapsulated by this.</param>
         public XmlRpcBase64(byte[] value)
@@ -39,21 +39,23 @@ namespace XmlRpc.Types
         /// <returns>The generated Xml.</returns>
         public override XElement GenerateXml()
         {
-            return new XElement(XName.Get(ElementName), Convert.ToBase64String(Value));
+            return new XElement(XName.Get(XmlRpcElements.ValueElement),
+                new XElement(XName.Get(ContentElementName), Convert.ToBase64String(Value)));
         }
 
         /// <summary>
-        /// Sets the Value property with the information contained in the XElement. It must have a name fitting with the ElementName property.
+        /// Sets the Value property with the information contained in the value-XElement.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override XmlRpcType<byte[]> ParseXml(XElement xElement)
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement xElement)
         {
-            checkName(xElement);
-
-            Value = Convert.FromBase64String(xElement.Value);
-
-            return this;
+            try
+            {
+                Value = Convert.FromBase64String(xElement.Elements().First().Value);
+                return true;
+            }
+            catch { return false; }
         }
     }
 }

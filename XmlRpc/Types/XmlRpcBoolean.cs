@@ -8,25 +8,25 @@ namespace XmlRpc.Types
     /// <summary>
     /// Represents an XmlRpcType containing a boolean.
     /// </summary>
-    public class XmlRpcBoolean : XmlRpcType<bool>
+    public sealed class XmlRpcBoolean : XmlRpcType<bool>
     {
         /// <summary>
         /// The name of Elements of this type.
         /// </summary>
-        public override string ElementName
+        public override string ContentElementName
         {
-            get { return "boolean"; }
+            get { return XmlRpcElements.BooleanElement; }
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcBoolean"/> class with Value set to the default value for bool.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcBoolean"/> class with Value set to the default value for bool.
         /// </summary>
         public XmlRpcBoolean()
             : base()
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcBoolean"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcBoolean"/> class with the given value.
         /// </summary>
         /// <param name="value">The bool encapsulated by this.</param>
         public XmlRpcBoolean(bool value)
@@ -34,24 +34,23 @@ namespace XmlRpc.Types
         { }
 
         /// <summary>
-        /// Generates an XElement from the Value. Default implementation creates an XElement with the ElementName and the content from Value.
+        /// Generates a value-XElement containing the information stored in this XmlRpc type.
         /// </summary>
         /// <returns>The generated Xml.</returns>
         public override XElement GenerateXml()
         {
-            return new XElement(XName.Get(ElementName), Value ? 1 : 0);
+            return new XElement(XName.Get(XmlRpcElements.ValueElement),
+                new XElement(XName.Get(ContentElementName), Value ? 1 : 0));
         }
 
         /// <summary>
-        /// Sets the Value property with the information contained in the XElement. It must have a name fitting with the ElementName property.
+        /// Sets the Value property with the information contained in the value-XElement.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override XmlRpcType<bool> ParseXml(XElement xElement)
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement xElement)
         {
-            checkName(xElement);
-
-            switch (xElement.Value.ToLower())
+            switch (xElement.Elements().First().Value.ToLower())
             {
                 case "false":
                 case "0":
@@ -64,10 +63,10 @@ namespace XmlRpc.Types
                     break;
 
                 default:
-                    throw new FormatException("Boolean format not recognized");
+                    return false;
             }
 
-            return this;
+            return true;
         }
     }
 }

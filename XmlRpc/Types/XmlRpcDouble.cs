@@ -8,25 +8,25 @@ namespace XmlRpc.Types
     /// <summary>
     /// Represents an XmlRpcType containing a double.
     /// </summary>
-    public class XmlRpcDouble : XmlRpcType<double>
+    public sealed class XmlRpcDouble : XmlRpcType<double>
     {
         /// <summary>
-        /// The name of Elements of this type.
+        /// The name of value content elements for this XmlRpc type.
         /// </summary>
-        public override string ElementName
+        public override string ContentElementName
         {
-            get { return "double"; }
+            get { return XmlRpcElements.DoubleElement; }
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcDouble"/> class with Value set to the default value for double.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcDouble"/> class with Value set to the default value for double.
         /// </summary>
         public XmlRpcDouble()
             : base()
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcDouble"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcDouble"/> class with the given value.
         /// </summary>
         /// <param name="value">The double encapsulated by this.</param>
         public XmlRpcDouble(double value)
@@ -34,17 +34,21 @@ namespace XmlRpc.Types
         { }
 
         /// <summary>
-        /// Sets the Value property with the information contained in the XElement. It must have a name fitting with the ElementName property.
+        /// Sets the Value property with the information contained in the value-XElement.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override XmlRpcType<double> ParseXml(XElement xElement)
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement xElement)
         {
-            checkName(xElement);
+            double value;
 
-            Value = double.Parse(xElement.Value);
+            if (double.TryParse(xElement.Elements().First().Value, out value))
+            {
+                Value = value;
+                return true;
+            }
 
-            return this;
+            return false;
         }
     }
 }

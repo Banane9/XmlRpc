@@ -8,7 +8,7 @@ namespace XmlRpc.Types.Structs
     /// <summary>
     /// Gets the struct returned when a method call has a fault.
     /// </summary>
-    public sealed class FaultStruct : BaseStruct<FaultStruct>
+    public sealed class FaultStruct : BaseStruct
     {
         /// <summary>
         /// Backing field for the FaultCode property.
@@ -42,9 +42,9 @@ namespace XmlRpc.Types.Structs
         /// <returns>The generated XElement.</returns>
         public override XElement GenerateXml()
         {
-            return new XElement(XName.Get(ElementName),
-                makeMemberElement("faultCode", faultCode.GenerateXml()),
-                makeMemberElement("faultString", faultString.GenerateXml()));
+            return new XElement(XName.Get(XmlRpcElements.StructElement),
+                makeMemberElement("faultCode", faultCode),
+                makeMemberElement("faultString", faultString));
         }
 
         /// <summary>
@@ -52,32 +52,36 @@ namespace XmlRpc.Types.Structs
         /// </summary>
         /// <param name="xElement">The struct element storing the information.</param>
         /// <returns>Itself, for convenience.</returns>
-        public override FaultStruct ParseXml(XElement xElement)
+        public override bool ParseXml(XElement xElement)
         {
-            checkName(xElement);
+            if (!isStructElement(xElement))
+                return false;
 
-            foreach (XElement member in xElement.Descendants(XName.Get(MemberElement)))
+            foreach (XElement member in xElement.Elements())
             {
-                checkIsValidMemberElement(member);
+                if (!isValidMemberElement(member))
+                    return false;
 
                 XElement value = getMemberValueElement(member);
 
                 switch (getMemberName(member))
                 {
                     case "faultCode":
-                        faultCode.ParseXml(getValueContent(value, faultCode.ElementName));
+                        if (!faultCode.ParseXml(value))
+                            return false;
                         break;
 
                     case "faultString":
-                        faultString.ParseXml(getValueContent(value, faultString.ElementName));
+                        if (!faultString.ParseXml(value))
+                            return false;
                         break;
 
                     default:
-                        throw new FormatException("Unexpected member with name " + getMemberName(member));
+                        return false;
                 }
             }
 
-            return this;
+            return true;
         }
     }
 }
