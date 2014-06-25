@@ -21,7 +21,21 @@ namespace XmlRpc.Types.Structs
         /// </summary>
         /// <param name="xElement">The struct element storing the information.</param>
         /// <returns>Whether it was successful or not.</returns>
-        public abstract bool ParseXml(XElement xElement);
+        public bool ParseXml(XElement xElement)
+        {
+            isStructElement(xElement);
+
+            foreach (XElement member in xElement.Elements())
+            {
+                if (!isValidMemberElement(member))
+                    return false;
+
+                if (!parseXml(member))
+                    return false;
+            }
+
+            return true;
+        }
 
         public override string ToString()
         {
@@ -76,13 +90,20 @@ namespace XmlRpc.Types.Structs
         /// Creates a member element from the name and the value content element.
         /// </summary>
         /// <param name="name">The name of the member.</param>
-        /// <param name="value">The value XmlRpc type.</param>
-        /// <typeparam name="T">The XmlRpc's base type.</typeparam>
+        /// <param name="value">The value XmlRpcType.</param>
+        /// <typeparam name="T">The XmlRpType's base type.</typeparam>
         /// <returns>The member element with the given name and value content.</returns>
         protected XElement makeMemberElement<T>(string name, XmlRpcType<T> value)
         {
             return new XElement(XName.Get(XmlRpcElements.StructMemberElement), makeNameXElement(name), value.GenerateXml());
         }
+
+        /// <summary>
+        /// Fills the property of this struct that has the correct name with the information contained in the member-XElement.
+        /// </summary>
+        /// <param name="xElement">The member element storing the information.</param>
+        /// <returns>Whether it was successful or not.</returns>
+        protected abstract bool parseXml(XElement member);
 
         /// <summary>
         /// Creates a name element with the given content.

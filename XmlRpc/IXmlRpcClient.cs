@@ -28,7 +28,7 @@ namespace XmlRpc
     /// <summary>
     /// Interface for XmlRpc Clients.
     /// </summary>
-    public interface IXmlRpcClient : IDisposable
+    public interface IXmlRpcClient
     {
         /// <summary>
         /// Gets client's name.
@@ -41,7 +41,7 @@ namespace XmlRpc
         void EndReceive();
 
         /// <summary>
-        /// Send a xml formatted request to the XmlRpc interface.
+        /// Send an Xml formatted request to the XmlRpc interface.
         /// </summary>
         /// <param name="request">The xml formatted request.</param>
         /// <returns>The handle associated with the request.</returns>

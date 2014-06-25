@@ -48,37 +48,28 @@ namespace XmlRpc.Types.Structs
         }
 
         /// <summary>
-        /// Fills the properties of this struct with the information contained in the element.
+        /// Fills the property of this struct that has the correct name with the information contained in the member-XElement.
         /// </summary>
-        /// <param name="xElement">The struct element storing the information.</param>
-        /// <returns>Itself, for convenience.</returns>
-        public override bool ParseXml(XElement xElement)
+        /// <param name="member">The member element storing the information.</param>
+        /// <returns>Whether it was successful or not.</returns>
+        protected override bool parseXml(XElement member)
         {
-            if (!isStructElement(xElement))
-                return false;
+            XElement value = getMemberValueElement(member);
 
-            foreach (XElement member in xElement.Elements())
+            switch (getMemberName(member))
             {
-                if (!isValidMemberElement(member))
-                    return false;
-
-                XElement value = getMemberValueElement(member);
-
-                switch (getMemberName(member))
-                {
-                    case "faultCode":
-                        if (!faultCode.ParseXml(value))
-                            return false;
-                        break;
-
-                    case "faultString":
-                        if (!faultString.ParseXml(value))
-                            return false;
-                        break;
-
-                    default:
+                case "faultCode":
+                    if (!faultCode.ParseXml(value))
                         return false;
-                }
+                    break;
+
+                case "faultString":
+                    if (!faultString.ParseXml(value))
+                        return false;
+                    break;
+
+                default:
+                    return false;
             }
 
             return true;
