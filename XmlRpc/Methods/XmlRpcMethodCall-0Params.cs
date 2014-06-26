@@ -89,9 +89,17 @@ namespace XmlRpc.Methods
         {
             if (!xElement.Name.LocalName.Equals(XmlRpcElements.MethodCallElement)
              || !xElement.HasElements
-             || xElement.Elements().Count() != 1)
+             || xElement.Elements().Count() != 2)
                 return false;
 
+            XElement methodNameElement = xElement.Elements().First();
+
+            if (!methodNameElement.Name.LocalName.Equals(XmlRpcElements.MethodNameElement)
+             || methodNameElement.IsEmpty
+             || !methodNameElement.Value.Equals(MethodName))
+                return false;
+
+            methodNameElement.Remove();
             XElement paramsElement = xElement.Elements().First();
 
             if (!paramsElement.Name.LocalName.Equals(XmlRpcElements.ParamsElement))
