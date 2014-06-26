@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Struct ParseXml</Title>
+      <Author>Banane9</Author>
+      <Description>Snippet for the body of the parseXml method that implementors of the BaseStruct class have to override.</Description>
+      <Shortcut>parsestruct</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp" Kind="method body">
+        <![CDATA[XElement value = getMemberValueElement(member);
+
+            switch (getMemberName(member))
+            {
+                case $end$:
+                
+                default:
+                    return false;
+            }
+            
+            return true;]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
