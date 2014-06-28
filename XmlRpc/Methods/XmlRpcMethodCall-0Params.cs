@@ -105,6 +105,10 @@ namespace XmlRpc.Methods
             if (!paramsElement.Name.LocalName.Equals(XmlRpcElements.ParamsElement))
                 return false;
 
+            var reversedParams = paramsElement.Elements().Reverse().ToArray();
+            paramsElement.RemoveAll();
+            paramsElement.Add(reversedParams);
+
             return parseCallParamsXml(paramsElement);
         }
 

@@ -78,12 +78,8 @@ namespace XmlRpc.Types
         /// <returns>Whether it has fitting content or not.</returns>
         protected virtual bool hasValueCorrectContent(XElement xElement)
         {
-            try
-            {
-                var elements = xElement.Elements();
-                return elements.Count() == 1 && elements.Any(element => element.Name.LocalName.Equals(ContentElementName));
-            }
-            catch { return false; }
+            return (xElement.HasElements && xElement.Elements().Count() == 1 && xElement.Elements().First().Name.LocalName.Equals(ContentElementName))
+                || (!xElement.HasElements && !xElement.IsEmpty);
         }
 
         /// <summary>
