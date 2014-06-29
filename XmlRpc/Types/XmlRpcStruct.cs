@@ -52,6 +52,9 @@ namespace XmlRpc.Types
         /// <returns>Whether it was successful or not.</returns>
         protected override bool parseXml(XElement xElement)
         {
+            if (Value == null)
+                Value = new TXmlRpcStruct();
+
             return Value.ParseXml(xElement.Elements().First());
         }
     }
