@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>XmlRpc</id>
+        <version>1.1</version>
+        <title>XmlRpc</title>
+        <authors>Banane9</authors>
+        <owners>Banane9</owners>
+        <licenseUrl>https://github.com/Banane9/XmlRpc/blob/master/LICENSE.md</licenseUrl>
+        <projectUrl>https://github.com/Banane9/XmlRpc</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Library for interfacing with a server using XmlRpc</description>
+        <summary>Library for interfacing with a server using XmlRpc.</summary>
+        <language />
+        <tags>xmlrpc xml remote server function web</tags>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+            <frameworkAssembly assemblyName="System" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+            <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="XmlRpc\bin\Release\XmlRpc.dll" target="lib\XmlRpc.dll" />
+        <file src="XmlRpc\bin\Release\XmlRpc.xml" target="lib\XmlRpc.xml" />
+    </files>
+</package>
