@@ -40,7 +40,7 @@ namespace XmlRpc.Types
         /// <returns>The generated Xml.</returns>
         public override XElement GenerateXml()
         {
-            string date = Value.Year.ToString() + Value.Month.ToString() + Value.Date.ToString() + "T" + Value.Hour.ToString() + ":" + Value.Minute.ToString() + ":" + Value.Second.ToString();
+            string date = string.Format("{0}{1}{2}T{3}:{4}:{5}", Value.Year, Value.Month, Value.Day, Value.Hour, Value.Minute, Value.Second);
 
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
                 new XElement(XName.Get(ContentElementName), date));

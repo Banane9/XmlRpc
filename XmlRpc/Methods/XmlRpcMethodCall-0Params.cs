@@ -107,7 +107,7 @@ namespace XmlRpc.Methods
 
             var reversedParams = paramsElement.Elements().Reverse().ToArray();
             paramsElement.RemoveAll();
-            paramsElement.Add(reversedParams);
+            paramsElement.Add(new object[] { reversedParams });
 
             return parseCallParamsXml(paramsElement);
         }
