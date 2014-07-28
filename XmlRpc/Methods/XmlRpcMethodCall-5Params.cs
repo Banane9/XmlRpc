@@ -35,6 +35,16 @@ namespace XmlRpc.Methods
         /// </summary>
         protected TParam5 param5 = new TParam5();
 
+        /// <summary>
+        /// Creates a new instance of the
+        /// <see cref="XmlRpc.Methods.XmlRpcMethodCall&lt;TParam1, TParam1Base, TParam2, TParam2Base, TParam3, TParam3Base, TParam4, TParam4Base, TParam5, TParam5Base, TReturn, TReturnBase&gt;"/>
+        /// class with the given values for the parameters.
+        /// </summary>
+        /// <param name="param1">The first parameter's value.</param>
+        /// <param name="param2">The second parameter's value.</param>
+        /// <param name="param3">The third parameter's value.</param>
+        /// <param name="param4">The fourth parameter's value.</param>
+        /// <param name="param5">The fith parameter's value.</param>
         protected XmlRpcMethodCall(TParam1Base param1, TParam2Base param2, TParam3Base param3, TParam4Base param4, TParam5Base param5)
             : base(param1, param2, param3, param4)
         {
@@ -57,7 +67,7 @@ namespace XmlRpc.Methods
         /// <summary>
         /// Fills the properties of this method call with the information contained in the XElement.
         /// </summary>
-        /// <param name="xElement">The params element storing the information.</param>
+        /// <param name="paramsElement">The params element storing the information.</param>
         /// <returns>Whether it was successful or not.</returns>
         protected override bool parseCallParamsXml(XElement paramsElement)
         {

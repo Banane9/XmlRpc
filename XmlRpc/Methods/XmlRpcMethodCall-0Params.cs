@@ -153,23 +153,21 @@ namespace XmlRpc.Methods
             return true;
         }
 
+        /// <summary>
+        /// Returns a string representation of the method call.
+        /// </summary>
+        /// <returns>A string representing the method call.</returns>
         public override string ToString()
         {
             return GenerateCallXml().ToString();
         }
 
         /// <summary>
-        /// Generates Xml containing the call parameter data.
-        /// <para/>
-        /// To be overridden by classes that add more call parameters to add theirs.
+        /// Checks whether a given XElement is a valid param element.
         /// </summary>
-        /// <returns>An XElement containing the call parameter data.</returns>
-        protected virtual XElement generateCallParamsXml()
-        {
-            return new XElement(XName.Get(XmlRpcElements.ParamsElement));
-        }
-
-        protected bool isValidParamElement(XElement xElement)
+        /// <param name="xElement">The element to check.</param>
+        /// <returns>Whether the given XElement is a valid param element.</returns>
+        protected static bool isValidParamElement(XElement xElement)
         {
             return xElement != null
                 && xElement.Name.LocalName.Equals(XmlRpcElements.ParamElement)
@@ -183,22 +181,19 @@ namespace XmlRpc.Methods
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <param name="value">The XmlRpcType to be wrapped.</param>
         /// <returns>A param-Element containing the value as content.</returns>
-        protected XElement makeParamElement<T>(XmlRpcType<T> value)
+        protected static XElement makeParamElement<T>(XmlRpcType<T> value)
         {
             return new XElement(XName.Get(XmlRpcElements.ParamElement), value.GenerateXml());
         }
 
         /// <summary>
-        /// Fills the properties of this method call with the information contained in the XElement.
+        /// Fills the parameter properties of this method call with the information contained in the XElement.
         /// </summary>
-        /// <param name="xElement">The params element storing the information.</param>
+        /// <typeparam name="T">The XmlRpcType of the parameter.</typeparam>
+        /// <param name="paramsElement">The XElement containing the information.</param>
+        /// <param name="param">The parameter.</param>
         /// <returns>Whether it was successful or not.</returns>
-        protected virtual bool parseCallParamsXml(XElement paramsElement)
-        {
-            return !paramsElement.HasElements;
-        }
-
-        protected bool parseCallParamXml<T>(XElement paramsElement, XmlRpcType<T> param)
+        protected static bool parseCallParamXml<T>(XElement paramsElement, XmlRpcType<T> param)
         {
             if (!paramsElement.HasElements)
                 return false;
@@ -211,6 +206,27 @@ namespace XmlRpc.Methods
             paramElement.Remove();
 
             return param.ParseXml(paramElement.Elements().First());
+        }
+
+        /// <summary>
+        /// Generates Xml containing the call parameter data.
+        /// <para/>
+        /// To be overridden by classes that add more call parameters to add theirs.
+        /// </summary>
+        /// <returns>An XElement containing the call parameter data.</returns>
+        protected virtual XElement generateCallParamsXml()
+        {
+            return new XElement(XName.Get(XmlRpcElements.ParamsElement));
+        }
+
+        /// <summary>
+        /// Fills the parameter properties of this method call with the information contained in the XElement.
+        /// </summary>
+        /// <param name="paramsElement">The params element storing the information.</param>
+        /// <returns>Whether it was successful or not.</returns>
+        protected virtual bool parseCallParamsXml(XElement paramsElement)
+        {
+            return !paramsElement.HasElements;
         }
     }
 }

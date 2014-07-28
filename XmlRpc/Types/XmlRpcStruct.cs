@@ -21,14 +21,14 @@ namespace XmlRpc.Types
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct"/> class with Value set to default value for TXmlRpcType.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct&lt;TXmlRpcStruct&gt;"/> class with Value set to default value for TXmlRpcType.
         /// </summary>
         public XmlRpcStruct()
             : base()
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct&lt;TXmlRpcStruct&gt;"/> class with the given value.
         /// </summary>
         /// <param name="value">The struct encapsulated by this.</param>
         public XmlRpcStruct(TXmlRpcStruct value)

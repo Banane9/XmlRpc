@@ -37,6 +37,10 @@ namespace XmlRpc.Types.Structs
             return true;
         }
 
+        /// <summary>
+        /// Returns a string representation of the struct.
+        /// </summary>
+        /// <returns>A string representation of the struct.</returns>
         public override string ToString()
         {
             return GenerateXml().ToString();
@@ -47,7 +51,7 @@ namespace XmlRpc.Types.Structs
         /// </summary>
         /// <param name="member">The member element to get the name from.</param>
         /// <returns>The name of the member.</returns>
-        protected string getMemberName(XElement member)
+        protected static string getMemberName(XElement member)
         {
             isValidMemberElement(member);
 
@@ -59,7 +63,7 @@ namespace XmlRpc.Types.Structs
         /// </summary>
         /// <param name="member">The member element to get the value from.</param>
         /// <returns>The value element of the member or null if not a valid member.</returns>
-        protected XElement getMemberValueElement(XElement member)
+        protected static XElement getMemberValueElement(XElement member)
         {
             return isValidMemberElement(member) ? member.Element(XName.Get(XmlRpcElements.ValueElement)) : null;
         }
@@ -69,7 +73,7 @@ namespace XmlRpc.Types.Structs
         /// </summary>
         /// <param name="xElement">The element to check.</param>
         /// <returns>Whether it has the correct local name.</returns>
-        protected bool isStructElement(XElement xElement)
+        protected static bool isStructElement(XElement xElement)
         {
             return xElement.Name.LocalName.Equals(XmlRpcElements.StructElement);
         }
@@ -78,7 +82,7 @@ namespace XmlRpc.Types.Structs
         /// Checks if an element is a valid member element.
         /// </summary>
         /// <param name="member">The element to check.</param>
-        protected bool isValidMemberElement(XElement member)
+        protected static bool isValidMemberElement(XElement member)
         {
             return member.Name.LocalName.Equals(XmlRpcElements.StructMemberElement)
                 && member.HasElements
@@ -93,7 +97,7 @@ namespace XmlRpc.Types.Structs
         /// <param name="value">The value XmlRpcType.</param>
         /// <typeparam name="T">The XmlRpType's base type.</typeparam>
         /// <returns>The member element with the given name and value content.</returns>
-        protected XElement makeMemberElement<T>(string name, XmlRpcType<T> value)
+        protected static XElement makeMemberElement<T>(string name, XmlRpcType<T> value)
         {
             return new XElement(XName.Get(XmlRpcElements.StructMemberElement), makeNameXElement(name), value.GenerateXml());
         }
@@ -101,7 +105,7 @@ namespace XmlRpc.Types.Structs
         /// <summary>
         /// Fills the property of this struct that has the correct name with the information contained in the member-XElement.
         /// </summary>
-        /// <param name="xElement">The member element storing the information.</param>
+        /// <param name="member">The member element storing the information.</param>
         /// <returns>Whether it was successful or not.</returns>
         protected abstract bool parseXml(XElement member);
 
@@ -110,7 +114,7 @@ namespace XmlRpc.Types.Structs
         /// </summary>
         /// <param name="name">The value of the name element.</param>
         /// <returns>The name element with the given value.</returns>
-        private XElement makeNameXElement(string name)
+        private static XElement makeNameXElement(string name)
         {
             return new XElement(XName.Get(XmlRpcElements.StructMemberNameElement), name);
         }

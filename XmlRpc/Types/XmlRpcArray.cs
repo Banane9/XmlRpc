@@ -24,7 +24,7 @@ namespace XmlRpc.Types
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcArray"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcArray&lt;TArray, TArrayBase&gt;"/> class with the given value.
         /// </summary>
         /// <param name="value">The array encapsulated by this.</param>
         public XmlRpcArray(params TArray[] value)
@@ -32,7 +32,7 @@ namespace XmlRpc.Types
         { }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcArray"/> class with a zero-length TArray array for the Value property.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcArray&lt;TArray, TArrayBase&gt;"/> class with a zero-length TArray array for the Value property.
         /// </summary>
         public XmlRpcArray()
             : base(new TArray[0])
@@ -49,6 +49,10 @@ namespace XmlRpc.Types
                     Value.Select(value => value.GenerateXml()).ToArray()));
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates the Array.
+        /// </summary>
+        /// <returns>An enumerator that iterates the Array.</returns>
         public IEnumerator<TArrayBase> GetEnumerator()
         {
             return Value.Select(value => value.Value).GetEnumerator();

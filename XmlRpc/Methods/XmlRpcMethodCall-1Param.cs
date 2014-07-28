@@ -22,6 +22,10 @@ namespace XmlRpc.Methods
         /// </summary>
         protected TParam1 param1 = new TParam1();
 
+        /// <summary>
+        /// Creates a new instance of the <see cref="XmlRpc.Methods.XmlRpcMethodCall&lt;TParam1, TParam1Base, TReturn, TReturnBase&gt;"/> class with the given value for the parameter.
+        /// </summary>
+        /// <param name="param1">The parameter's value.</param>
         protected XmlRpcMethodCall(TParam1Base param1)
         {
             this.param1.Value = param1;
@@ -43,7 +47,7 @@ namespace XmlRpc.Methods
         /// <summary>
         /// Fills the properties of this method call with the information contained in the XElement.
         /// </summary>
-        /// <param name="xElement">The params element storing the information.</param>
+        /// <param name="paramsElement">The params element storing the information.</param>
         /// <returns>Whether it was successful or not.</returns>
         protected override bool parseCallParamsXml(XElement paramsElement)
         {

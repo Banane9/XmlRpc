@@ -22,7 +22,7 @@ namespace XmlRpc.Types
         public TValue Value { get; set; }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcType"/> class with Value set to the default value for TValue.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcType&lt;TValue&gt;"/> class with Value set to the default value for TValue.
         /// </summary>
         protected XmlRpcType()
         {
@@ -30,7 +30,7 @@ namespace XmlRpc.Types
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="ManiaNet.XmlRpc.Types.XmlRpcType"/> class with the given value.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcType&lt;TValue&gt;"/> class with the given value.
         /// </summary>
         /// <param name="value">The value.</param>
         protected XmlRpcType(TValue value)
@@ -63,9 +63,23 @@ namespace XmlRpc.Types
             return parseXml(xElement);
         }
 
+        /// <summary>
+        /// Returns a string representation of the Type.
+        /// </summary>
+        /// <returns>A string representation of the Type.</returns>
         public override string ToString()
         {
             return GenerateXml().ToString();
+        }
+
+        /// <summary>
+        /// Checks whether the given XElement has the local name corresponding to a value element.
+        /// </summary>
+        /// <param name="xElement">The element to check.</param>
+        /// <returns>Whether it has the correct local name.</returns>
+        protected static bool isValueElement(XElement xElement)
+        {
+            return xElement.Name.LocalName.Equals(XmlRpcElements.ValueElement);
         }
 
         /// <summary>
@@ -83,22 +97,12 @@ namespace XmlRpc.Types
         }
 
         /// <summary>
-        /// Checks whether the given XElement has the local name corresponding to a value element.
-        /// </summary>
-        /// <param name="xElement">The element to check.</param>
-        /// <returns>Whether it has the correct local name.</returns>
-        protected bool isValueElement(XElement xElement)
-        {
-            return xElement.Name.LocalName.Equals(XmlRpcElements.ValueElement);
-        }
-
-        /// <summary>
         /// Sets the Value property with the information contained in the value-XElement.
         /// <para/>
         /// Gets called by the ParseXml method to do the actual parsing. Validity of the XElement will have already been verified.
         /// </summary>
         /// <param name="xElement">The element containing the information.</param>
         /// <returns>Whether it was successful or not.</returns>
-        protected abstract bool parseXml(XElement xelement);
+        protected abstract bool parseXml(XElement xElement);
     }
 }

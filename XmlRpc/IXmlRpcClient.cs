@@ -8,6 +8,7 @@ namespace XmlRpc
     /// EventHandler for the ConnectionDroppedUnexpectedly event.
     /// </summary>
     /// <param name="sender">The xml rpc client of which the connection dropped.</param>
+    /// <param name="cause">The Exception that caused the connection to be dropped.</param>
     public delegate void ConnectionDroppedUnexpectedlyEventHandler(IXmlRpcClient sender, Exception cause);
 
     /// <summary>
