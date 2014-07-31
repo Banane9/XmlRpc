@@ -23,7 +23,6 @@ namespace XmlRpc.Types
         /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcDateTime"/> class with Value set to the defaut value for DateTime.
         /// </summary>
         public XmlRpcDateTime()
-            : base()
         { }
 
         /// <summary>
@@ -43,7 +42,7 @@ namespace XmlRpc.Types
             string date = string.Format("{0}{1}{2}T{3}:{4}:{5}", Value.Year, Value.Month, Value.Day, Value.Hour, Value.Minute, Value.Second);
 
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                new XElement(XName.Get(ContentElementName), date));
+                                new XElement(XName.Get(ContentElementName), date));
         }
 
         /// <summary>
@@ -73,7 +72,10 @@ namespace XmlRpc.Types
 
                 return true;
             }
-            catch { return false; }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

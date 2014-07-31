@@ -22,7 +22,6 @@ namespace XmlRpc.Types
         /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcInt"/> class with Value set to the default value for int.
         /// </summary>
         public XmlRpcInt()
-            : base()
         { }
 
         /// <summary>

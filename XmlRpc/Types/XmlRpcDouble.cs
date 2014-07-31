@@ -22,7 +22,6 @@ namespace XmlRpc.Types
         /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcDouble"/> class with Value set to the default value for double.
         /// </summary>
         public XmlRpcDouble()
-            : base()
         { }
 
         /// <summary>

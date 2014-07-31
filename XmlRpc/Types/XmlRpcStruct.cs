@@ -10,7 +10,8 @@ namespace XmlRpc.Types
     /// Represents an XmlRpcType containing a xml rpc struct that is derived from <see cref="XmlRpc.Types.Structs.BaseStruct"/>.
     /// </summary>
     /// <typeparam name="TXmlRpcStruct">The Type of the struct. Also the Type of the Value property.</typeparam>
-    public sealed class XmlRpcStruct<TXmlRpcStruct> : XmlRpcType<TXmlRpcStruct> where TXmlRpcStruct : BaseStruct, new()
+    public sealed class XmlRpcStruct<TXmlRpcStruct> : XmlRpcType<TXmlRpcStruct>
+        where TXmlRpcStruct : BaseStruct, new()
     {
         /// <summary>
         /// The name of value content elements for this XmlRpc type.
@@ -24,7 +25,6 @@ namespace XmlRpc.Types
         /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct&lt;TXmlRpcStruct&gt;"/> class with Value set to default value for TXmlRpcType.
         /// </summary>
         public XmlRpcStruct()
-            : base()
         { }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace XmlRpc.Types
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                Value.GenerateXml());
+                                Value.GenerateXml());
         }
 
         /// <summary>

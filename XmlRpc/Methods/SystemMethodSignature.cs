@@ -8,7 +8,8 @@ namespace XmlRpc.Methods
     /// <summary>
     /// Represents a call to the system.methodSignature method.
     /// </summary>
-    public sealed class SystemMethodSignature : XmlRpcMethodCall<XmlRpcString, string, XmlRpcArray<XmlRpcArray<XmlRpcString, string>, XmlRpcString[]>, XmlRpcArray<XmlRpcString, string>[]>
+    public sealed class SystemMethodSignature
+        : XmlRpcMethodCall<XmlRpcString, string, XmlRpcArray<XmlRpcArray<XmlRpcString, string>, XmlRpcString[]>, XmlRpcArray<XmlRpcString, string>[]>
     {
         /// <summary>
         /// Gets or sets the login used for authentication.

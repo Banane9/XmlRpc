@@ -12,7 +12,7 @@ namespace XmlRpc.Methods
     /// </summary>
     /// <typeparam name="TReturn">The returned XmlRpcType.</typeparam>
     /// <typeparam name="TReturnBase">The type of the return value.</typeparam>
-    public abstract class XmlRpcMethodCall<TReturn, TReturnBase>// : IXmlRpcMethodCall
+    public abstract class XmlRpcMethodCall<TReturn, TReturnBase>
         where TReturn : XmlRpcType<TReturnBase>, new()
     {
         /// <summary>
@@ -23,7 +23,7 @@ namespace XmlRpc.Methods
         /// <summary>
         /// Backing field for the Fault property.
         /// </summary>
-        private XmlRpcStruct<FaultStruct> fault = new XmlRpcStruct<FaultStruct>();
+        private readonly XmlRpcStruct<FaultStruct> fault = new XmlRpcStruct<FaultStruct>();
 
         /// <summary>
         /// Gets or sets the fault information. May be the default of <see cref="XmlRpc.Types.Structs.FaultStruct"/>.
@@ -63,8 +63,8 @@ namespace XmlRpc.Methods
         public XElement GenerateCallXml()
         {
             return new XElement(XName.Get(XmlRpcElements.MethodCallElement),
-                new XElement(XName.Get(XmlRpcElements.MethodNameElement), MethodName),
-                generateCallParamsXml());
+                                new XElement(XName.Get(XmlRpcElements.MethodNameElement), MethodName),
+                                generateCallParamsXml());
         }
 
         /// <summary>
@@ -74,10 +74,11 @@ namespace XmlRpc.Methods
         public XElement GenerateResponseXml()
         {
             return new XElement(XName.Get(XmlRpcElements.MethodResponseElement),
-                HadFault ? new XElement(XName.Get(XmlRpcElements.FaultElement), fault.GenerateXml())
-                    : new XElement(XName.Get(XmlRpcElements.ParamsElement),
-                        new XElement(XName.Get(XmlRpcElements.ParamElement),
-                            returned.GenerateXml())));
+                                HadFault
+                                    ? new XElement(XName.Get(XmlRpcElements.FaultElement), fault.GenerateXml())
+                                    : new XElement(XName.Get(XmlRpcElements.ParamsElement),
+                                                   new XElement(XName.Get(XmlRpcElements.ParamElement),
+                                                                returned.GenerateXml())));
         }
 
         /// <summary>
@@ -88,15 +89,15 @@ namespace XmlRpc.Methods
         public bool ParseCallXml(XElement xElement)
         {
             if (!xElement.Name.LocalName.Equals(XmlRpcElements.MethodCallElement)
-             || !xElement.HasElements
-             || xElement.Elements().Count() != 2)
+                || !xElement.HasElements
+                || xElement.Elements().Count() != 2)
                 return false;
 
             XElement methodNameElement = xElement.Elements().First();
 
             if (!methodNameElement.Name.LocalName.Equals(XmlRpcElements.MethodNameElement)
-             || methodNameElement.IsEmpty
-             || !methodNameElement.Value.Equals(MethodName))
+                || methodNameElement.IsEmpty
+                || !methodNameElement.Value.Equals(MethodName))
                 return false;
 
             methodNameElement.Remove();
@@ -105,7 +106,7 @@ namespace XmlRpc.Methods
             if (!paramsElement.Name.LocalName.Equals(XmlRpcElements.ParamsElement))
                 return false;
 
-            var reversedParams = paramsElement.Elements().Reverse().ToArray();
+            XElement[] reversedParams = paramsElement.Elements().Reverse().ToArray();
             paramsElement.RemoveAll();
             paramsElement.Add(new object[] { reversedParams });
 
@@ -170,9 +171,9 @@ namespace XmlRpc.Methods
         protected static bool isValidParamElement(XElement xElement)
         {
             return xElement != null
-                && xElement.Name.LocalName.Equals(XmlRpcElements.ParamElement)
-                && xElement.Elements().Count() == 1
-                && xElement.Elements().First().Name.LocalName.Equals(XmlRpcElements.ValueElement);
+                   && xElement.Name.LocalName.Equals(XmlRpcElements.ParamElement)
+                   && xElement.Elements().Count() == 1
+                   && xElement.Elements().First().Name.LocalName.Equals(XmlRpcElements.ValueElement);
         }
 
         /// <summary>

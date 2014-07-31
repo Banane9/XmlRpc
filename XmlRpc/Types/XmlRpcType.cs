@@ -47,7 +47,7 @@ namespace XmlRpc.Types
         public virtual XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                new XElement(XName.Get(ContentElementName), Value));
+                                new XElement(XName.Get(ContentElementName), Value));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace XmlRpc.Types
         protected virtual bool hasValueCorrectContent(XElement xElement)
         {
             return (xElement.HasElements && xElement.Elements().Count() == 1 && xElement.Elements().First().Name.LocalName.Equals(ContentElementName))
-                || (!xElement.HasElements && !xElement.IsEmpty);
+                   || (!xElement.HasElements && !xElement.IsEmpty);
         }
 
         /// <summary>

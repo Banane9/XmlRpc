@@ -22,7 +22,6 @@ namespace XmlRpc.Types
         /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcBoolean"/> class with Value set to the default value for bool.
         /// </summary>
         public XmlRpcBoolean()
-            : base()
         { }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace XmlRpc.Types
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                new XElement(XName.Get(ContentElementName), Value ? 1 : 0));
+                                new XElement(XName.Get(ContentElementName), Value ? 1 : 0));
         }
 
         /// <summary>

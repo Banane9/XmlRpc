@@ -13,12 +13,12 @@ namespace XmlRpc.Types.Structs
         /// <summary>
         /// Backing field for the FaultCode property.
         /// </summary>
-        private XmlRpcInt faultCode = new XmlRpcInt();
+        private readonly XmlRpcInt faultCode = new XmlRpcInt();
 
         /// <summary>
         /// Backing field for the FaultString property.
         /// </summary>
-        private XmlRpcString faultString = new XmlRpcString();
+        private readonly XmlRpcString faultString = new XmlRpcString();
 
         /// <summary>
         /// Gets the fault code.
@@ -43,8 +43,8 @@ namespace XmlRpc.Types.Structs
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.StructElement),
-                makeMemberElement("faultCode", faultCode),
-                makeMemberElement("faultString", faultString));
+                                makeMemberElement("faultCode", faultCode),
+                                makeMemberElement("faultString", faultString));
         }
 
         /// <summary>

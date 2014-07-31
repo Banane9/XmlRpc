@@ -85,9 +85,9 @@ namespace XmlRpc.Types.Structs
         protected static bool isValidMemberElement(XElement member)
         {
             return member.Name.LocalName.Equals(XmlRpcElements.StructMemberElement)
-                && member.HasElements
-                && member.Elements(XName.Get(XmlRpcElements.StructMemberNameElement)).Any()
-                && member.Elements(XName.Get(XmlRpcElements.ValueElement)).Any();
+                   && member.HasElements
+                   && member.Elements(XName.Get(XmlRpcElements.StructMemberNameElement)).Any()
+                   && member.Elements(XName.Get(XmlRpcElements.ValueElement)).Any();
         }
 
         /// <summary>

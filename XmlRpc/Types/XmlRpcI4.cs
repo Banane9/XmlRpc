@@ -21,7 +21,6 @@ namespace XmlRpc.Types
         /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcI4"/> class with Value set to the default value for int.
         /// </summary>
         public XmlRpcI4()
-            : base()
         { }
 
         /// <summary>

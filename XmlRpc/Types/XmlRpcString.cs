@@ -54,7 +54,8 @@ namespace XmlRpc.Types
                 Value = xElement.Elements().First().Value;
             else if (!xElement.IsEmpty)
                 Value = xElement.Value;
-            else return false;
+            else
+                return false;
 
             return true;
         }

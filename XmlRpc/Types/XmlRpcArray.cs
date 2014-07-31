@@ -13,7 +13,8 @@ namespace XmlRpc.Types
     /// </summary>
     /// <typeparam name="TArray">TArray[] is the Type of the Value property.</typeparam>
     /// <typeparam name="TArrayBase">TBase is the base type that TArray has to derive from.</typeparam>
-    public class XmlRpcArray<TArray, TArrayBase> : XmlRpcType<TArray[]>, IEnumerable<TArrayBase> where TArray : XmlRpcType<TArrayBase>, new()
+    public class XmlRpcArray<TArray, TArrayBase> : XmlRpcType<TArray[]>, IEnumerable<TArrayBase>
+        where TArray : XmlRpcType<TArrayBase>, new()
     {
         /// <summary>
         /// The name of Elements of this type.
@@ -45,8 +46,8 @@ namespace XmlRpc.Types
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(ContentElementName),
-                new XElement(XName.Get("data"),
-                    Value.Select(value => value.GenerateXml()).ToArray()));
+                                new XElement(XName.Get("data"),
+                                             Value.Select(value => value.GenerateXml()).ToArray()));
         }
 
         /// <summary>
@@ -70,14 +71,14 @@ namespace XmlRpc.Types
         /// <returns>Whether it was successful or not.</returns>
         protected override bool parseXml(XElement xElement)
         {
-            List<TArray> content = new List<TArray>();
+            var content = new List<TArray>();
 
             if (!xElement.Elements().First().Elements().First().Name.LocalName.Equals(XmlRpcElements.ArrayDataElement))
                 return false;
 
             foreach (XElement valueElement in xElement.Elements().First().Elements().First().Elements())
             {
-                TArray value = new TArray();
+                var value = new TArray();
 
                 if (!value.ParseXml(valueElement))
                     return false;
