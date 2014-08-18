@@ -45,9 +45,10 @@ namespace XmlRpc.Types
         /// <returns>The generated Xml.</returns>
         public override XElement GenerateXml()
         {
-            return new XElement(XName.Get(ContentElementName),
-                                new XElement(XName.Get("data"),
-                                             Value.Select(value => value.GenerateXml()).ToArray()));
+            return new XElement(XmlRpcElements.ValueElement,
+                new XElement(XName.Get(ContentElementName),
+                    new XElement(XName.Get("data"),
+                        Value.Select(value => value.GenerateXml()).ToArray())));
         }
 
         /// <summary>

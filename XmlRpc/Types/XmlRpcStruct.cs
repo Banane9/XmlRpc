@@ -22,9 +22,10 @@ namespace XmlRpc.Types
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct&lt;TXmlRpcStruct&gt;"/> class with Value set to default value for TXmlRpcType.
+        /// Creates a new instance of the <see cref="XmlRpc.Types.XmlRpcStruct&lt;TXmlRpcStruct&gt;"/> class with a new TXmlRpcType.
         /// </summary>
         public XmlRpcStruct()
+            : base(new TXmlRpcStruct())
         { }
 
         /// <summary>
