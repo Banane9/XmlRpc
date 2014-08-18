@@ -16,7 +16,7 @@ namespace XmlRpc.Testing
         /// Takes an Assembly and an action that is performed on the result of the round-trip check, and checks every <see cref="XmlRpc.Types.Structs.BaseStruct"/> derivative
         /// that doesn't have generic parameters and isn't abstract for round-trip safety.
         /// <para/>
-        /// This assumes that all the XmlRpcType&lt;&gt; that are supposed to be checked, are private fields of the class.
+        /// This assumes that all the XmlRpcType&lt;&gt; that are supposed to be checked, are private fields of the class, and are the only things that is serialized.
         /// </summary>
         /// <param name="assemblies">The assemblies to check the types in.</param>
         /// <param name="assertIsTrue">The action that is performed on the results of the round-trip check.
@@ -35,12 +35,12 @@ namespace XmlRpc.Testing
                     if (!structInstance.ParseXml(generatedXml))
                         assertIsTrue(false, structType, "Failed Parsing.");
 
-                    assertIsTrue(generatedXml.ToString().Equals(filledStruct.GenerateXml().ToString()), structType, "Failed Equality Check");
+                    assertIsTrue(generatedXml.ToString().Equals(structInstance.GenerateXml().ToString()), structType, "Failed Equality Check");
                 }
             }
         }
 
-        private static object fillStruct(Type structType)
+        internal static object fillStruct(Type structType)
         {
             var structInstance = Activator.CreateInstance(structType);
             var contentFields = getContentFields(structType);
@@ -59,13 +59,20 @@ namespace XmlRpc.Testing
             return structInstance;
         }
 
-        private static IEnumerable<FieldInfo> getContentFields(Type structType)
+        internal static IEnumerable<FieldInfo> getContentFields(Type type)
         {
-            return structType.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetField)
-                             .Where(field => field.FieldType.InheritsOrImplements(typeof(XmlRpcType<>)));
+            foreach (var f in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                                  .Where(field => field.FieldType.InheritsOrImplements(typeof(XmlRpcType<>))))
+                yield return f;
+
+            if (type.BaseType == typeof(object))
+                yield break;
+
+            foreach (var f in getContentFields(type.BaseType))
+                yield return f;
         }
 
-        private static object resolveXmlRpcType(Type type)
+        internal static object resolveXmlRpcType(Type type)
         {
             var value = new object();
 

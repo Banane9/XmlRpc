@@ -63,8 +63,8 @@ namespace XmlRpc.Methods
         public XElement GenerateCallXml()
         {
             return new XElement(XName.Get(XmlRpcElements.MethodCallElement),
-                                new XElement(XName.Get(XmlRpcElements.MethodNameElement), MethodName),
-                                generateCallParamsXml());
+                new XElement(XName.Get(XmlRpcElements.MethodNameElement), MethodName),
+                generateCallParamsXml());
         }
 
         /// <summary>
@@ -74,11 +74,11 @@ namespace XmlRpc.Methods
         public XElement GenerateResponseXml()
         {
             return new XElement(XName.Get(XmlRpcElements.MethodResponseElement),
-                                HadFault
-                                    ? new XElement(XName.Get(XmlRpcElements.FaultElement), fault.GenerateXml())
-                                    : new XElement(XName.Get(XmlRpcElements.ParamsElement),
-                                                   new XElement(XName.Get(XmlRpcElements.ParamElement),
-                                                                returned.GenerateXml())));
+                HadFault
+                    ? new XElement(XName.Get(XmlRpcElements.FaultElement), fault.GenerateXml())
+                    : new XElement(XName.Get(XmlRpcElements.ParamsElement),
+                          new XElement(XName.Get(XmlRpcElements.ParamElement),
+                          returned.GenerateXml())));
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace XmlRpc.Methods
             if (child.Elements().Count() != 1 || (!child.Name.LocalName.Equals(XmlRpcElements.ParamsElement) && !child.Name.LocalName.Equals(XmlRpcElements.FaultElement)))
                 return false;
 
-            XElement value = child.Elements().First().Elements().First();
+            XElement value = child.Elements().First();
 
             if (value == null)
                 return false;

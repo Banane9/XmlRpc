@@ -49,6 +49,7 @@
     <Compile Include="Methods\XmlRpcMethodCall-4Params.cs" />
     <Compile Include="Methods\XmlRpcMethodCall-5Params.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\MethodCalls.cs" />
     <Compile Include="Testing\ReflectionUtils.cs" />
     <Compile Include="Testing\Structs.cs" />
     <Compile Include="Types\Structs\BaseStruct.cs" />

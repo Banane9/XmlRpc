@@ -6,6 +6,14 @@ namespace XmlRpc.Testing
 {
     internal static class ReflectionUtils
     {
+        public static object GetDefaultValue(this Type t)
+        {
+            if (t == null)
+                return null;
+
+            return t.IsValueType ? Activator.CreateInstance(t) : null;
+        }
+
         public static bool InheritsOrImplements(this Type child, Type parent)
         {
             parent = resolveGenericTypeDefinition(parent);
