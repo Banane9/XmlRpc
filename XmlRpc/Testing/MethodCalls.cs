@@ -12,19 +12,22 @@ namespace XmlRpc.Testing
     public static class MethodCalls
     {
         /// <summary>
-        /// Takes an Assembly and an action that is performed on the result of the round-trip check, and checks every <see cref="XmlRpc.Methods.XmlRpcMethodCall"/> derivative
+        /// Takes an Assembly and an action that is performed on the result of the round-trip check, and checks every <see cref="XmlRpcMethodCall{TReturn,TReturnBase}"/> derivative
         /// that doesn't have generic parameters and isn't abstract for round-trip safety.
         /// <para/>
         /// This assumes that all the XmlRpcType&lt;&gt; that are supposed to be checked, are private fields of the class, and are the only things that are serialized.
         /// </summary>
         /// <param name="assemblies">The assemblies to check the types in.</param>
-        /// <param name="assertIsTrue">The action that is performed on the results of the round-trip check.
-        /// First parameter is whether it was successful, second is the Type of the tested MethodCall, third is the reason it failed (if it did).</param>
+        /// <param name="assertIsTrue">
+        /// The action that is performed on the results of the round-trip check.
+        /// First parameter is whether it was successful, second is the Type of the tested MethodCall, third is the reason it failed (if it did).
+        /// </param>
         public static void AreRoundTripSave(Action<bool, Type, string> assertIsTrue, params Assembly[] assemblies)
         {
             foreach (var assembly in assemblies)
             {
-                var methodCallTypes = assembly.GetExportedTypes().Where(t => t.InheritsOrImplements(typeof(XmlRpcMethodCall<,>)) && !t.IsAbstract && !t.ContainsGenericParameters);
+                var methodCallTypes =
+                    assembly.GetExportedTypes().Where(t => t.InheritsOrImplements(typeof(XmlRpcMethodCall<,>)) && !t.IsAbstract && !t.ContainsGenericParameters);
                 foreach (var methodCallType in methodCallTypes)
                 {
                     var filledMethod = fillMethod(methodCallType);
@@ -37,7 +40,7 @@ namespace XmlRpc.Testing
                     if (!(bool)methodInstance.GetType().GetMethod("ParseCallXml").Invoke(methodInstance, new[] { generatedCallXml }))
                         assertIsTrue(false, methodCallType, "Failed Call Parsing.");
 
-                    if (!(bool)methodInstance.GetType().GetMethod("ParseResponseXml").Invoke(methodInstance, new object[] { generatedResponseXml }))
+                    if (!(bool)methodInstance.GetType().GetMethod("ParseResponseXml").Invoke(methodInstance, new[] { generatedResponseXml }))
                         assertIsTrue(false, methodCallType, "Failed Response Parsing");
 
                     var generatedCallAfterParsing = methodInstance.GetType().GetMethod("GenerateCallXml").Invoke(methodInstance, new object[0]);

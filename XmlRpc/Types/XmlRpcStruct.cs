@@ -43,7 +43,7 @@ namespace XmlRpc.Types
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                                Value.GenerateXml());
+                Value.GenerateXml());
         }
 
         /// <summary>

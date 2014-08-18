@@ -19,8 +19,10 @@ namespace XmlRpc.Testing
         /// This assumes that all the XmlRpcType&lt;&gt; that are supposed to be checked, are private fields of the class, and are the only things that is serialized.
         /// </summary>
         /// <param name="assemblies">The assemblies to check the types in.</param>
-        /// <param name="assertIsTrue">The action that is performed on the results of the round-trip check.
-        /// First parameter is whether it was successful, second is the Type of the tested Struct, third is the reason it failed (if it did).</param>
+        /// <param name="assertIsTrue">
+        /// The action that is performed on the results of the round-trip check.
+        /// First parameter is whether it was successful, second is the Type of the tested Struct, third is the reason it failed (if it did).
+        /// </param>
         public static void AreRoundTripSave(Action<bool, Type, string> assertIsTrue, params Assembly[] assemblies)
         {
             foreach (var assembly in assemblies)
@@ -62,7 +64,7 @@ namespace XmlRpc.Testing
         internal static IEnumerable<FieldInfo> getContentFields(Type type)
         {
             foreach (var f in type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
-                                  .Where(field => field.FieldType.InheritsOrImplements(typeof(XmlRpcType<>))))
+                                        .Where(field => field.FieldType.InheritsOrImplements(typeof(XmlRpcType<>))))
                 yield return f;
 
             if (type.BaseType == typeof(object))

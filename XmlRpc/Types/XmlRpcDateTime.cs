@@ -42,7 +42,7 @@ namespace XmlRpc.Types
             string date = string.Format("{0}{1}{2}T{3}:{4}:{5}", Value.Year, Value.Month, Value.Day, Value.Hour, Value.Minute, Value.Second);
 
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                                new XElement(XName.Get(ContentElementName), date));
+                new XElement(XName.Get(ContentElementName), date));
         }
 
         /// <summary>

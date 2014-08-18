@@ -37,7 +37,8 @@ namespace XmlRpc.Methods
 
         /// <summary>
         /// Creates a new instance of the
-        /// <see cref="XmlRpc.Methods.XmlRpcMethodCall
+        /// <see
+        ///     cref="XmlRpc.Methods.XmlRpcMethodCall
         /// &lt;TParam1, TParam1Base, TParam2, TParam2Base, TParam3, TParam3Base, TParam4, TParam4Base, TParam5, TParam5Base, TReturn, TReturnBase&gt;"/>
         /// class with the given values for the parameters.
         /// </summary>

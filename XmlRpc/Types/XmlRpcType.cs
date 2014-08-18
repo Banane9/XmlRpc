@@ -47,7 +47,7 @@ namespace XmlRpc.Types
         public virtual XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                                new XElement(XName.Get(ContentElementName), Value));
+                new XElement(XName.Get(ContentElementName), Value));
         }
 
         /// <summary>

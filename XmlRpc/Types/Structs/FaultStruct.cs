@@ -43,8 +43,8 @@ namespace XmlRpc.Types.Structs
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.StructElement),
-                                makeMemberElement("faultCode", faultCode),
-                                makeMemberElement("faultString", faultString));
+                makeMemberElement("faultCode", faultCode),
+                makeMemberElement("faultString", faultString));
         }
 
         /// <summary>

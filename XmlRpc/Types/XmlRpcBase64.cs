@@ -40,7 +40,7 @@ namespace XmlRpc.Types
         public override XElement GenerateXml()
         {
             return new XElement(XName.Get(XmlRpcElements.ValueElement),
-                                new XElement(XName.Get(ContentElementName), Convert.ToBase64String(Value)));
+                new XElement(XName.Get(ContentElementName), Convert.ToBase64String(Value)));
         }
 
         /// <summary>
