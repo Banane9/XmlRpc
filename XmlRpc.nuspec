@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>XmlRpc</id>
-        <version>1.1</version>
+        <version>2.1.1</version>
         <title>XmlRpc</title>
         <authors>Banane9</authors>
         <owners>Banane9</owners>
@@ -11,18 +11,18 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Library for interfacing with a server using XmlRpc</description>
         <summary>Library for interfacing with a server using XmlRpc.</summary>
-        <language />
-        <tags>xmlrpc xml remote server function web</tags>
+        <releaseNotes>Fixed derpy bug with MethodCall ParseResponseXml.</releaseNotes>
+        <language>en</language>
+        <tags>xmlrpc xml remote server function web request control</tags>
         <frameworkAssemblies>
-            <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
-            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
             <frameworkAssembly assemblyName="System" targetFramework="" />
             <frameworkAssembly assemblyName="System.Core" targetFramework="" />
-            <frameworkAssembly assemblyName="Microsoft.CSharp" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
         </frameworkAssemblies>
     </metadata>
     <files>
-        <file src="XmlRpc\bin\Release\XmlRpc.dll" target="lib\XmlRpc.dll" />
-        <file src="XmlRpc\bin\Release\XmlRpc.xml" target="lib\XmlRpc.xml" />
+        <file src="XmlRpc\bin\Release\XmlRpc.dll" target="lib\net45\XmlRpc.dll" />
+        <file src="XmlRpc\bin\Release\XmlRpc.xml" target="lib\net45\XmlRpc.xml" />
     </files>
 </package>

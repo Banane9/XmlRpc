@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\XmlRpc.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,7 +36,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IXmlRpcClient.cs" />
@@ -48,6 +48,7 @@
     <Compile Include="Methods\XmlRpcMethodCall-3Params.cs" />
     <Compile Include="Methods\XmlRpcMethodCall-4Params.cs" />
     <Compile Include="Methods\XmlRpcMethodCall-5Params.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\MethodCalls.cs" />
     <Compile Include="Testing\ReflectionUtils.cs" />

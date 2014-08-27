@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>XmlRpc</id>
+        <version>2.1.1</version>
+        <title>XmlRpc</title>
+        <authors>Banane9</authors>
+        <owners>Banane9</owners>
+        <licenseUrl>https://github.com/Banane9/XmlRpc/blob/master/LICENSE.md</licenseUrl>
+        <projectUrl>https://github.com/Banane9/XmlRpc</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Library for interfacing with a server using XmlRpc</description>
+        <summary>Library for interfacing with a server using XmlRpc.</summary>
+        <releaseNotes>Fixed derpy bug with MethodCall ParseResponseXml.</releaseNotes>
+        <language>en</language>
+        <tags>xmlrpc xml remote server function web request control</tags>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework="" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="XmlRpc\bin\Debug\XmlRpc.dll" target="lib\net45\XmlRpc.dll" />
+        <file src="XmlRpc\bin\Debug\XmlRpc.pdb" target="lib\net45\XmlRpc.pdb" />
+        <file src="XmlRpc\bin\Debug\XmlRpc.xml" target="lib\net45\XmlRpc.xml" />
+        <file src="XmlRpc\Methods\SystemListMethods.cs" target="src\Methods\SystemListMethods.cs" />
+        <file src="XmlRpc\Methods\SystemMethodHelp.cs" target="src\Methods\SystemMethodHelp.cs" />
+        <file src="XmlRpc\Methods\SystemMethodSignature.cs" target="src\Methods\SystemMethodSignature.cs" />
+        <file src="XmlRpc\Methods\XmlRpcMethodCall-0Params.cs" target="src\Methods\XmlRpcMethodCall-0Params.cs" />
+        <file src="XmlRpc\Methods\XmlRpcMethodCall-1Param.cs" target="src\Methods\XmlRpcMethodCall-1Param.cs" />
+        <file src="XmlRpc\Methods\XmlRpcMethodCall-2Params.cs" target="src\Methods\XmlRpcMethodCall-2Params.cs" />
+        <file src="XmlRpc\Methods\XmlRpcMethodCall-3Params.cs" target="src\Methods\XmlRpcMethodCall-3Params.cs" />
+        <file src="XmlRpc\Methods\XmlRpcMethodCall-4Params.cs" target="src\Methods\XmlRpcMethodCall-4Params.cs" />
+        <file src="XmlRpc\Methods\XmlRpcMethodCall-5Params.cs" target="src\Methods\XmlRpcMethodCall-5Params.cs" />
+        <file src="XmlRpc\Properties\Annotations.cs" target="src\Properties\Annotations.cs" />
+        <file src="XmlRpc\Properties\AssemblyInfo.cs" target="src\Properties\AssemblyInfo.cs" />
+        <file src="XmlRpc\Testing\MethodCalls.cs" target="src\Testing\MethodCalls.cs" />
+        <file src="XmlRpc\Testing\ReflectionUtils.cs" target="src\Testing\ReflectionUtils.cs" />
+        <file src="XmlRpc\Testing\Structs.cs" target="src\Testing\Structs.cs" />
+        <file src="XmlRpc\Types\Structs\BaseStruct.cs" target="src\Types\Structs\BaseStruct.cs" />
+        <file src="XmlRpc\Types\Structs\FaultStruct.cs" target="src\Types\Structs\FaultStruct.cs" />
+        <file src="XmlRpc\Types\Structs\ParseStruct.snippet" target="src\Types\Structs\ParseStruct.snippet" />
+        <file src="XmlRpc\Types\XmlRpcArray.cs" target="src\Types\XmlRpcArray.cs" />
+        <file src="XmlRpc\Types\XmlRpcBase64.cs" target="src\Types\XmlRpcBase64.cs" />
+        <file src="XmlRpc\Types\XmlRpcBoolean.cs" target="src\Types\XmlRpcBoolean.cs" />
+        <file src="XmlRpc\Types\XmlRpcDateTime.cs" target="src\Types\XmlRpcDateTime.cs" />
+        <file src="XmlRpc\Types\XmlRpcDouble.cs" target="src\Types\XmlRpcDouble.cs" />
+        <file src="XmlRpc\Types\XmlRpcI4.cs" target="src\Types\XmlRpcI4.cs" />
+        <file src="XmlRpc\Types\XmlRpcInt.cs" target="src\Types\XmlRpcInt.cs" />
+        <file src="XmlRpc\Types\XmlRpcString.cs" target="src\Types\XmlRpcString.cs" />
+        <file src="XmlRpc\Types\XmlRpcStruct.cs" target="src\Types\XmlRpcStruct.cs" />
+        <file src="XmlRpc\Types\XmlRpcType.cs" target="src\Types\XmlRpcType.cs" />
+        <file src="XmlRpc\IXmlRpcClient.cs" target="src\IXmlRpcClient.cs" />
+        <file src="XmlRpc\XmlRpcElements.cs" target="src\XmlRpcElements.cs" />
+    </files>
+</package>

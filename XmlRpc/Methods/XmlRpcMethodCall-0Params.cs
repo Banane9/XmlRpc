@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using XmlRpc.Annotations;
 using XmlRpc.Types;
 using XmlRpc.Types.Structs;
 
@@ -16,31 +17,28 @@ namespace XmlRpc.Methods
         where TReturn : XmlRpcType<TReturnBase>, new()
     {
         /// <summary>
-        /// Backing field for the Returned property.
-        /// </summary>
-        protected TReturn returned = new TReturn();
-
-        /// <summary>
         /// Backing field for the Fault property.
         /// </summary>
         private readonly XmlRpcStruct<FaultStruct> fault = new XmlRpcStruct<FaultStruct>();
 
         /// <summary>
-        /// Gets or sets the fault information. May be the default of <see cref="XmlRpc.Types.Structs.FaultStruct"/>.
+        /// Backing field for the Returned property.
         /// </summary>
+        private readonly TReturn returned = new TReturn();
+
+        /// <summary>
+        /// Gets the fault information.
+        /// </summary>
+        [NotNull, UsedImplicitly]
         public FaultStruct Fault
         {
             get { return fault.Value; }
-            set { fault.Value = value; }
         }
 
         /// <summary>
         /// Gets whether there was a fault with the method call or not.
         /// </summary>
-        public bool HadFault
-        {
-            get { return fault.Value != default(FaultStruct); }
-        }
+        public bool HadFault { get; private set; }
 
         /// <summary>
         /// Gets the name of the method this call is for.
@@ -48,12 +46,12 @@ namespace XmlRpc.Methods
         public abstract string MethodName { get; }
 
         /// <summary>
-        /// Gets or sets the return value of the call. May be the default of TReturnBase.
+        /// Gets the return value of the call.
         /// </summary>
+        [NotNull, UsedImplicitly]
         public TReturnBase ReturnValue
         {
             get { return returned.Value; }
-            set { returned.Value = value; }
         }
 
         /// <summary>
@@ -86,6 +84,7 @@ namespace XmlRpc.Methods
         /// </summary>
         /// <param name="xElement">The method call element storing the information.</param>
         /// <returns>Whether it was successful or not.</returns>
+        [UsedImplicitly]
         public bool ParseCallXml(XElement xElement)
         {
             if (!xElement.Name.LocalName.Equals(XmlRpcElements.MethodCallElement)
@@ -130,7 +129,7 @@ namespace XmlRpc.Methods
             if (child.Elements().Count() != 1 || (!child.Name.LocalName.Equals(XmlRpcElements.ParamsElement) && !child.Name.LocalName.Equals(XmlRpcElements.FaultElement)))
                 return false;
 
-            XElement value = child.Elements().First();
+            XElement value = child.Elements().First().Elements().First();
 
             if (value == null)
                 return false;
@@ -140,11 +139,13 @@ namespace XmlRpc.Methods
                 case XmlRpcElements.ParamsElement:
                     if (!returned.ParseXml(value))
                         return false;
+                    HadFault = false;
                     break;
 
                 case XmlRpcElements.FaultElement:
                     if (!fault.ParseXml(value))
                         return false;
+                    HadFault = true;
                     break;
 
                 default:
