@@ -189,4 +189,4 @@ You shouldn't have to define any of those, as all from the XmlRpc spec are inclu
 
 ##License##
 
-#####[GPL V2](https://github.com/Banane9/XmlRpc/tree/master/LICENSE.md)#####
+#####[LGPL V2.1](https://github.com/Banane9/XmlRpc/tree/master/LICENSE.md)#####
