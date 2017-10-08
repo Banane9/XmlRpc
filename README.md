@@ -5,15 +5,15 @@ Implementation of the [XmlRpc Spec](http://xmlrpc.scripting.com/spec.html). Orig
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-##Usage##
+## Usage ##
 
-For a real-world usage example, check [here](https://github.com/Banane9/ManiaNet/tree/master/ManiaNet.DedicatedServer/XmlRpc) and [here](https://github.com/Banane9/ManiaNet/blob/32d4533e0548a52e9024cabd2732363b48a62154/ManiaNet.DedicatedServer.Controller/ServerController.cs#L192).
+For a real-world usage example, check [here](https://github.com/ManiaDotNet/DedicatedServer/tree/master/ManiaNet.DedicatedServer/XmlRpc) and [here](https://github.com/ManiaDotNet/ServerController/blob/master/ManiaNet.DedicatedServer.Controller/ServerController.cs#L146).
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-###Method Calls###
+### Method Calls ###
 
-#####Definition#####
+##### Definition #####
 
 ``` CSharp
 using XmlRpc.Methods;
@@ -59,7 +59,7 @@ public sealed class AddGuest : XmlRpcMethodCall<XmlRpcString, string, XmlRpcBool
 }
 ```
 
-#####Usage#####
+##### Usage #####
 
 ``` CSharp
 var addGuest = new AddGuest("banane9");
@@ -71,13 +71,13 @@ uint handle = xmlRpcClient.SendRequest(addGuest.GenerateXml().ToString());
 
 One then has to wait for the MethodResponse event with the matching handle to fire, and that will contain the response to that method.
 
-For an implementation of a CallMethod<> function that does this and automatically has the function parse the response, check [here](https://github.com/Banane9/ManiaNet/blob/32d4533e0548a52e9024cabd2732363b48a62154/ManiaNet.DedicatedServer.Controller/ServerController.cs#L192) on the ManiaNet project again.
+For an implementation of a CallMethod<> function that does this and automatically has the function parse the response, check [here](https://github.com/ManiaDotNet/ServerController/blob/master/ManiaNet.DedicatedServer.Controller/ServerController.cs#L146) on the ManiaNet project again.
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-###Custom Structs###
+### Custom Structs ###
 
-#####Definition#####
+##### Definition #####
 
 This is the content of the [FaultStruct.cs](https://github.com/Banane9/XmlRpc/blob/master/XmlRpc/Types/Structs/FaultStruct.cs) file with some additional comments.
 
@@ -167,7 +167,7 @@ public sealed class FaultStruct : BaseStruct
 
 For convenience, there's a [.snippet file](https://github.com/Banane9/XmlRpc/blob/master/XmlRpc/Types/Structs/ParseStruct.snippet) for the scaffolding of the `parseXml` method.
 
-#####Usage#####
+##### Usage #####
 
 For usage, the `BaseStruct`-derived Type has to be wrapped in `XmlRpcStruct<>`.
 
@@ -181,12 +181,12 @@ private XmlRpcStruct<FaultStruct> fault = new XmlRpcStruct<FaultStruct>();
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-###Types###
+### Types ###
 
 You shouldn't have to define any of those, as all from the XmlRpc spec are included. But in case your application has to deal with custom ones, simply follow the implementation of the spec ones, [here](https://github.com/Banane9/XmlRpc/tree/master/XmlRpc/Types).
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-##License##
+## License ##
 
-#####[LGPL V2.1](https://github.com/Banane9/XmlRpc/tree/master/LICENSE.md)#####
+##### [LGPL V2.1](https://github.com/Banane9/XmlRpc/tree/master/LICENSE.md) #####
